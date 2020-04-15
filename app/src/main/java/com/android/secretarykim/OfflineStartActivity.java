@@ -8,14 +8,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dinuscxj.progressbar.CircleProgressBar;
+
 public class OfflineStartActivity extends AppCompatActivity {
 
-    private Button startButton, pauseButton, stopButton;
     private TextView timeText;
-    private boolean isRunning = true;
+    private CircleProgressBar timePBar;
+    private boolean isRunning = false; // 회의 재개 중단 여부 판단
+    private boolean isStarted = false; // 회의 시작 종료 여부 판단
+
     private Thread timeThread = null;
 
     @Override
@@ -23,44 +28,40 @@ public class OfflineStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_start);
 
-        startButton = findViewById(R.id.startButton);
-        pauseButton = findViewById(R.id.pauseButton);
-        stopButton = findViewById(R.id.stopButton);
         timeText = findViewById(R.id.timeText);
+        timePBar = findViewById(R.id.timePBar);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+        timePBar.setMax(1800000);
+        timePBar.setProgress(0);
+        timePBar.setProgressTextSize(0);
+        timeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setVisibility(View.GONE);
-                stopButton.setVisibility(View.VISIBLE);
-                pauseButton.setVisibility(View.VISIBLE);
+                if ( isRunning != true && isStarted != true) { // 첫 시작시
+                    isRunning = true;
+                    isStarted = true;
 
-                timeThread = new Thread(new timeThread());
-                timeThread.start();
-            }
-        });
+                    timeThread = new Thread(new timeThread());
+                    timeThread.start();
+                }
 
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setVisibility(View.GONE);
-                startButton.setVisibility(View.VISIBLE);
-                pauseButton.setVisibility(View.GONE);
-                timeThread.interrupt();
-            }
-        });
-
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isRunning = !isRunning;
-                if (isRunning) {
-                    pauseButton.setText("일시정지");
-                } else {
-                    pauseButton.setText("시작");
+                if ( isStarted == true ) {
+                    isRunning = !isRunning;
                 }
             }
         });
+        timeText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(isStarted) {
+                    isRunning = false;
+                    isStarted = false;
+                    timeThread.interrupt();
+                }
+                return false;
+            }
+        });
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -75,6 +76,7 @@ public class OfflineStartActivity extends AppCompatActivity {
 
             @SuppressLint("DefaultLocale") String result = String.format("%02d:%02d:%02d:%02d", hour, min, sec, mSec);
 
+            timePBar.setProgress(msg.arg1);
             timeText.setText(result);
         }
     };
