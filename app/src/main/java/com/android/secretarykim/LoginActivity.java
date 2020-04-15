@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import com.google.android.gms.common.SignInButton;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -21,5 +22,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
     }
 }
