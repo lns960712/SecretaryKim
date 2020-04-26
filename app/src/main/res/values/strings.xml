@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SecretaryKim</string>
+    <string name="My_page">My Page</string>
+    <string name="Meeting_list">Meeting List</string>
+    <string name="Team_member">Team Member</string>
+    <string name="History">History</string>
+    
+    
+    <string name="openNavDrawer">Navigation Drawer Open</string>
+    <string name="closeNavDrawer">Navigation Drawer Close</string>
 </resources>
