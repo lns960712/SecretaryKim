@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.View;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,25 +38,18 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Button_send.findViewById(R.id.Button_send);
-        EditText_chat.findViewById(R.id.EditText_chat);
-        Button_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = EditText_chat.getText().toString();
-                if(message!=null) {
-                    ChatDTO chat = new ChatDTO();
-                    chat.setNickname(nick);
-                    chat.setMessage(message);
-                    myRef.push().setValue(chat);
-
-                }
+        Button_send = findViewById(R.id.Button_send);
+        EditText_chat = findViewById(R.id.EditText_chat);
+        Button_send.setOnClickListener(v -> {
+            String message = EditText_chat.getText().toString();
+            if(message!=null) {
+                ChatDTO chat = new ChatDTO();
+                chat.setNickname(nick);
+                chat.setMessage(message);
+                myRef.push().setValue(chat);
+                EditText_chat.setText("");
             }
         });
-
-
-
-
         //recyclerView
         crecyclerView = (RecyclerView) findViewById(R.id.chat_recycler_view);
         crecyclerView.setHasFixedSize(true);
@@ -69,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         crecyclerView.setAdapter(cAdapter);
         //DB연결
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");
+        myRef = database.getReference();
 
 
         //DB에서 데이터 가져오기
