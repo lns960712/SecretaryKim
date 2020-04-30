@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         auth = FirebaseAuth.getInstance(); // 인증 객체 초기화
 
-        btn_google = findViewById(R.id.loginButton);
+        btn_google = findViewById(R.id.sign_in_button);
         btn_google.setOnClickListener(new View.OnClickListener() { // 구글 로그인 버튼 클릭했을때
             @Override
             public void onClick(View view) {
@@ -82,14 +82,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) { // 로그인에 실제 성공을 했는지
                         if (task.isSuccessful()) { // 로그인이 성공 했으면
-                            Toast.makeText(LoginActivity.this, 'Login Success', Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
-                            intent.putExtra('nickName', account.getDisplayName()); // 닉네임 가져오기
-                            intent.putExtra('photoUrl', String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변환
+                            intent.putExtra("nickName", account.getDisplayName()); // 닉네임 가져오기
+                            intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변환
                             startActivity(intent);
                         }
                         else { // 로그인이 실패 했으면
-                            Toast.makeText(LoginActivity.this, 'Login Fail', Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login Fail", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
