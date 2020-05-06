@@ -1,4 +1,4 @@
-package com.android.secretarykim;
+package com.android.SecretaryKim;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View view) {
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                Log.v("user", "클릭함");
                 startActivityForResult(intent, RC_SIGN_IN);
             }
         });
@@ -65,13 +67,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // 구글 로그인 인증을 요청했을때 결과 값을 되돌려 받는 곳
         super.onActivityResult(requestCode, resultCode, data);
+        Log.v("user", "onActivity");
 
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.v("user", "인증은 됐는데...");
+            System.out.println(result.isSuccess());
+
             if(result.isSuccess()) { // 인증 결과가 성공적이면
                 GoogleSignInAccount account = result.getSignInAccount(); // account라는 데이터는 구글 로그인 정보를 담고있음
+                Log.v("user", "인증성공");
                 resultLogin(account); // 로그인 결과 값 출력 수행하라는 메소드
             }
+            Log.v("user", "if문 안들어감");
+
         }
     }
 
@@ -85,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
                             intent.putExtra("nickName", account.getDisplayName()); // 닉네임 가져오기
-                            intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변환
+                            intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변형
                             startActivity(intent);
                         }
                         else { // 로그인이 실패 했으면

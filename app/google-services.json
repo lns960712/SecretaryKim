@@ -10,10 +10,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:574143419693:android:47d99001757d48a077afa4",
         "android_client_info": {
-          "package_name": "com.android.secretarykim"
+          "package_name": "com.android.SecretaryKim"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "574143419693-19a3nhtegsic6uib729jct8utcvv4h3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.SecretaryKim",
+            "certificate_hash": "d3ff03c729175848a445c93c7aab81eaf516bbc5"
+          }
+        },
         {
           "client_id": "574143419693-begj7timv5o202ut9ounrn5g1d4p2rcq.apps.googleusercontent.com",
           "client_type": 3
