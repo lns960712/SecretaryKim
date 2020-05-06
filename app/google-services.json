@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "574143419693-19a3nhtegsic6uib729jct8utcvv4h3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.SecretaryKim",
+            "certificate_hash": "d3ff03c729175848a445c93c7aab81eaf516bbc5"
+          }
+        },
+        {
           "client_id": "574143419693-begj7timv5o202ut9ounrn5g1d4p2rcq.apps.googleusercontent.com",
           "client_type": 3
         }
