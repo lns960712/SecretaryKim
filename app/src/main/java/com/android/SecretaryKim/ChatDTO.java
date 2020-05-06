@@ -1,4 +1,4 @@
-package com.android.secretarykim;
+package com.android.SecretaryKim;
 
 import java.io.Serializable;
 

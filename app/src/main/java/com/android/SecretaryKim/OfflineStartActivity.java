@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.SecretaryKim.R;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 public class OfflineStartActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.android.secretarykim;
+package com.android.SecretaryKim;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.SecretaryKim.OfflineStartActivity;
 
 public class BranchActivity extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class BranchActivity extends AppCompatActivity {
         Button_online = findViewById(R.id.Button_online);
         Button_offline = findViewById(R.id.Button_offline);
         Button_online.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
             startActivity(intent);
         });
         Button_offline.setOnClickListener(v -> {

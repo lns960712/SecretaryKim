@@ -1,4 +1,4 @@
-package com.android.secretarykim;
+package com.android.SecretaryKim;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
