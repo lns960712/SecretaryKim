@@ -1,16 +1,15 @@
 package com.android.SecretaryKim;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import com.android.SecretaryKim.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,6 +30,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private SignInButton btn_google;
+    private Button loginButton;
+    private UserDTO user;
 
 
     @Override
@@ -49,15 +50,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         auth = FirebaseAuth.getInstance(); // 인증 객체 초기화
-
+        loginButton = findViewById(R.id.loginButton);
         btn_google = findViewById(R.id.sign_in_button);
-        btn_google.setOnClickListener(new View.OnClickListener() { // 구글 로그인 버튼 클릭했을때
-            @Override
-            public void onClick(View view) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                Log.v("user", "클릭함");
-                startActivityForResult(intent, RC_SIGN_IN);
-            }
+        // 구글 로그인 버튼 클릭했을때
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+            startActivity(intent);
+        });
+        btn_google.setOnClickListener(view -> {
+            Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+//            Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
+            Log.v("user", "클릭함");
+//            startActivity(intent);
+            startActivityForResult(intent, RC_SIGN_IN);
         });
 
 
@@ -91,8 +96,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onComplete(@NonNull Task<AuthResult> task) { // 로그인에 실제 성공을 했는지
                         if (task.isSuccessful()) { // 로그인이 성공 했으면
                             Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
-                            intent.putExtra("nickName", account.getDisplayName()); // 닉네임 가져오기
+                            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+                            user = new UserDTO();
+                            user.setEmail(account.getEmail());//intent값 넘겨받기
+                            user.setNickname(account.getDisplayName());//intent값 넘겨받기
+                            intent.putExtra("user", user); // 유저정보 넘겨주기
                             intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변형
                             startActivity(intent);
                         }

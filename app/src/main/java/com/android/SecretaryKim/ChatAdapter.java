@@ -52,10 +52,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ChatDTO chat= cDataset.get(position);
-        holder.TextView_nickname.setText(chat.getNickname());
+        holder.TextView_nickname.setText(chat.getUser().getNickname());
         holder.TextView_message.setText(chat.getMessage());
         //상대방이 보낸 메세지는 왼쪽, 내가 보낸 메세지는 오른쪽에 정렬
-        if(chat.getNickname().equals(this.myNickname)){
+        if(chat.getUser().getNickname().equals(this.myNickname)){
             holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
             holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         }else{
