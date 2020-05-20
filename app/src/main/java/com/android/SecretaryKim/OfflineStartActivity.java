@@ -1,7 +1,5 @@
 package com.android.SecretaryKim;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +7,8 @@ import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.SecretaryKim.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 public class OfflineStartActivity extends AppCompatActivity {

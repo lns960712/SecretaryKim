@@ -2,16 +2,13 @@ package com.android.SecretaryKim;
 
 import java.io.Serializable;
 
-public class ChatDTO implements Serializable {
-    private String message;
+public class UserDTO implements Serializable {
+
+    private String email;
     private String nickname;
 
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     public String getNickname() {
         return nickname;
     }

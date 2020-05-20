@@ -1,16 +1,16 @@
 package com.android.SecretaryKim;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,30 +23,33 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private static final String TAG = "ChatActivity";
     private RecyclerView crecyclerView;
     private RecyclerView.Adapter cAdapter;
     private RecyclerView.LayoutManager clayoutManager;
     private List<ChatDTO> chatDataset;
-    private String nick = "nick1";
-
+    private UserDTO user ;
+    private Intent intent;
     private EditText EditText_chat;
     private Button Button_send;
     private DatabaseReference myRef;
+    String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         Button_send = findViewById(R.id.Button_send);
         EditText_chat = findViewById(R.id.EditText_chat);
+        intent = getIntent();
+        user = (UserDTO) intent.getSerializableExtra("user");
         Button_send.setOnClickListener(v -> {
             String message = EditText_chat.getText().toString();
             if(message!=null) {
                 ChatDTO chat = new ChatDTO();
-                chat.setNickname(nick);
+                chat.setUser(user);
                 chat.setMessage(message);
-                myRef.push().setValue(chat);
+                myRef.push().setValue(chat);//DB에 값 넣기
                 EditText_chat.setText("");
             }
         });
@@ -58,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         //어댑터 설정
         chatDataset = new ArrayList<>();
-        cAdapter = new ChatAdapter(chatDataset, ChatActivity.this, nick);
+        cAdapter = new ChatAdapter(chatDataset, ChatActivity.this, user.getNickname());
         crecyclerView.setAdapter(cAdapter);
         //DB연결
         FirebaseDatabase database = FirebaseDatabase.getInstance();
