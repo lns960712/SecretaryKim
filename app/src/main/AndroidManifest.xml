@@ -10,24 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="OfflineStartActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
-<<<<<<< HEAD
-        <activity android:name="LoginActivity">
-=======
+        <activity android:name="com.android.SecretaryKim.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.android.SecretaryKim.BranchActivity"></activity>
         <activity android:name="com.android.SecretaryKim.ChatActivity"></activity>
         <activity android:name="com.android.SecretaryKim.ChatListActivity"></activity>
-        <activity android:name="com.android.SecretaryKim.LoginActivity">
->>>>>>> d47f22d37a738f58a9b3308e327b69bde0a3aee6
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-        </activity>
+        <activity android:name=".MainListActivity"></activity>
+
     </application>
 
 </manifest>
