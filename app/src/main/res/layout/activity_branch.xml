@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="online"></Button>
+
     <Button
         android:id="@+id/Button_offline"
         android:layout_width="wrap_content"

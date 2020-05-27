@@ -28,6 +28,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/*
+    Splash 를 제외하고 가장 처음 화면이다
+    앱 제목이 보이고 구글 계정으로 로그인 할 수 있다
+
+ */
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private FirebaseAuth auth;
