@@ -103,10 +103,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String email = userData.getEmail();
         String name = userData.getDisplayName();
         String uid = userData.getUid();
+
         System.out.println("account data is :");
         System.out.println(email);
         System.out.println(name);
         System.out.println(uid);
+
         user = new UserDTO();
         user.setUid(uid);
         user.setEmail(email);
