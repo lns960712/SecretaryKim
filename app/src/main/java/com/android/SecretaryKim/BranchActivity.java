@@ -27,13 +27,14 @@ public class BranchActivity extends AppCompatActivity {
 
         Button_online.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-            intent.putExtra("user", user); // 유저객체넘겨주기
+            intent.putExtra("user", user); // 닉네임 넘겨주기
 //            intent.putExtra("email", this.intent.getExtras().getString("email")); // 이메일 넘겨주기
             startActivity(intent);
         });
         Button_offline.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
-            intent.putExtra("user", user); // 유저객체넘겨주기
+            intent.putExtra("nickname", this.intent.getExtras().getString("nickname")); // 닉네임 넘겨주기
+            intent.putExtra("email", this.intent.getExtras().getString("email")); // 이메일 넘겨주기
             startActivity(intent);
         });
     }
