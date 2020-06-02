@@ -69,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         //DB에서 데이터 가져오기
+        // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

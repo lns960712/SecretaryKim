@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -28,10 +27,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/*
+    Splash 를 제외하고 가장 처음 화면이다
+    앱 제목이 보이고 구글 계정으로 로그인 할 수 있다
+
+ */
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private FirebaseAuth auth;
-    //private FirebaseUser user;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private SignInButton btn_google;
@@ -83,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.v("user", "인증은 됐는데...");
+            System.out.println(result.isSuccess());
 
             if(result.isSuccess()) { // 인증 결과가 성공적이면
                 GoogleSignInAccount account = result.getSignInAccount(); // account라는 데이터는 구글 로그인 정보를 담고있음
@@ -108,7 +113,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         user.setNickname(name);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(uid).setValue(user);
-
     }
 
     private void resultLogin(GoogleSignInAccount account) {
@@ -119,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onComplete(@NonNull Task<AuthResult> task) { // 로그인에 실제 성공을 했는지
                         if (task.isSuccessful()) { // 로그인이 성공 했으면
                             Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
                             user = new UserDTO();
                             user.setEmail(account.getEmail());//intent값 넘겨받기
                             user.setNickname(account.getDisplayName());//intent값 넘겨받기

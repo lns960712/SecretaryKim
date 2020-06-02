@@ -28,6 +28,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/*
+    Splash 를 제외하고 가장 처음 화면이다
+    앱 제목이 보이고 구글 계정으로 로그인 할 수 있다
+
+ */
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private FirebaseAuth auth;
@@ -98,10 +103,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String email = userData.getEmail();
         String name = userData.getDisplayName();
         String uid = userData.getUid();
+
         System.out.println("account data is :");
         System.out.println(email);
         System.out.println(name);
         System.out.println(uid);
+
         user = new UserDTO();
         user.setUid(uid);
         user.setEmail(email);
