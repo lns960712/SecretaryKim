@@ -2,12 +2,11 @@ package com.android.SecretaryKim;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,48 +24,49 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainListActivity extends AppCompatActivity {
     private Intent intent;
+    private UserDTO user;
+    private ConferenceDTO conference;
     private Button makeButton;
     private ImageView imageView;
     private DatabaseReference mDatabase;
     private FirebaseAuth mauth;
-    private String ConfId = null; // 회의 ID
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
 
-        mauth=FirebaseAuth.getInstance();
+        mauth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         makeButton = findViewById(R.id.makeConference);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.usericon);
-
+        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         intent = getIntent();
         makeButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
-            intent.putExtra("nickname", this.intent.getExtras().getString("nickname")); // 닉네임 넘겨주기
-            intent.putExtra("email", this.intent.getExtras().getString("email")); // 이메일 넘겨주기
+            intent.putExtra("user", user); // 유저객체넘겨주기
             restoreData();
             startActivity(intent);
         });
 
     }
 
-    protected void restoreData () {
-        // 현재 시간을 나타내는 timestamp를 생성
-        Long tsLong = System.currentTimeMillis()/1000;
-        String timestamp = tsLong.toString();
-        System.out.println("this time is :" + timestamp);
-
+    protected void restoreData() {
         // 파이어베이스에 데이터 저장
-        FirebaseUser user=mauth.getCurrentUser();
-        ConfId = user.getUid() + "_" + timestamp; // 회의 ID
-        mDatabase.child("conferences").child(ConfId).setValue("hello world");
+        FirebaseUser user = mauth.getCurrentUser();
+
+        conference = new ConferenceDTO();
+        Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
+        conference.setTimestamp(tsLong.toString());
+        System.out.println("this time is :" + tsLong.toString());
+        conference.setUser(this.user);
+        conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
+        mDatabase.child("conferences").child(conference.getConfId()).setValue("hello world");
         // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
         // DB상에서 리스트로 보일 필요 있음
-        mDatabase.child("users").child(user.getUid()).child("conference").setValue(ConfId);
+        mDatabase.child("users").child(this.user.getUid()).child("conference").setValue(conference.getConfId());
 
     }
-
 }
