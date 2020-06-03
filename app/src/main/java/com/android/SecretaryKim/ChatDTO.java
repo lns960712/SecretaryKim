@@ -1,23 +1,16 @@
 package com.android.SecretaryKim;
 
-public class ConferenceDTO {
+import java.io.Serializable;
 
-    private String  userId;
-    private String timestamp;
-    private String ConfId;
+public class ChatDTO implements Serializable {
+    private String message;
+    private UserDTO user;
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getMessage() { return message; }
+    public void setMessage(String message) {
+        this.message = message;
     }
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-    public String getConfId() {
-        return ConfId;
-    }
-    public void setConfId(String confId) {
-        ConfId = confId;
-    }
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public UserDTO getUser() { return user; }
+    public void setUser(UserDTO user) { this.user = user; }
+
 }

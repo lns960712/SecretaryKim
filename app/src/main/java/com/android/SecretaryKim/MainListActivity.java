@@ -2,15 +2,25 @@ package com.android.SecretaryKim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     본인의 정보를 보여주고 참가하고 있는 회의 목록을 볼 수 있는 액티비티
@@ -29,8 +39,12 @@ public class MainListActivity extends AppCompatActivity {
     private Button makeButton;
     private ImageView imageView;
     private DatabaseReference mDatabase;
-    private FirebaseAuth mauth;
-
+    private RecyclerView conrecyclerView;
+    private RecyclerView.Adapter conAdapter;
+    private RecyclerView.LayoutManager conlayoutManager;
+    private List<ConferenceDTO> conferenceDataset;
+    private DatabaseReference myRef;
+    private FirebaseAuth mauth; // 지우지 말것
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,31 +56,73 @@ public class MainListActivity extends AppCompatActivity {
         makeButton = findViewById(R.id.makeConference);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.usericon);
-        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         intent = getIntent();
+        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         makeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CreateConferenceActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
-            restoreData();
+//            restoreData();
             startActivity(intent);
+        });
+//recyclerView
+        conrecyclerView = (RecyclerView) findViewById(R.id.conference_recycler_view);
+        conrecyclerView.setHasFixedSize(true);
+        conlayoutManager = new LinearLayoutManager(this);
+        conrecyclerView.setLayoutManager(conlayoutManager);
+        // specify an adapter (see also next example)
+        //어댑터 설정
+        conferenceDataset = new ArrayList<>();
+        conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this);
+        conrecyclerView.setAdapter(conAdapter);
+        //DB연결
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
+
+        //DB에서 데이터 가져오기
+        // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("CHAT_LOG", dataSnapshot.getValue().toString());
+                ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
+                ((ConferenceAdapter)conAdapter).addConference(conference);
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
 
     }
 
-    protected void restoreData() {
-        // 파이어베이스에 데이터 저장
-        FirebaseUser user = mauth.getCurrentUser();
-
-        conference = new ConferenceDTO();
-        Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
-        conference.setTimestamp(tsLong.toString());
-        System.out.println("this time is :" + tsLong.toString());
-        conference.setUser(this.user);
-        conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
-        mDatabase.child("conferences").child(conference.getConfId()).setValue("hello world");
-        // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
-        // DB상에서 리스트로 보일 필요 있음
-        mDatabase.child("users").child(this.user.getUid()).child("conference").setValue(conference.getConfId());
-
-    }
+//    protected void restoreData() {
+//        // 파이어베이스에 데이터 저장
+//
+//        conference = new ConferenceDTO();
+//        Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
+//        conference.setTimestamp(tsLong.toString());
+//        System.out.println("this time is :" + tsLong.toString());
+//        conference.setUserId(user.getUid());
+//        conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
+//        mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
+//        Log.d("user", conference.getConfId());
+//        Log.d("user", user.getUid());
+//        // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
+//        // DB상에서 리스트로 보일 필요 있음
+//        mDatabase.child("users").child(user.getUid()).child("conference").setValue(conference.getConfId());
+//
+//    }
 }

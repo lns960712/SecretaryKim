@@ -3,14 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <TextView
-        android:id="@+id/TextView_nickname"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/TextView_message"
-        android:textSize="20sp"
+        android:id="@+id/TextView_title"
+        android:textSize="40sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

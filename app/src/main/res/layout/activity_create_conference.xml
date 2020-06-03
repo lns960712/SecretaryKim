@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".CreateConferenceActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회의제목 : "
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+    <EditText
+        android:id="@+id/EditText_conference"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <Button
+        android:id="@+id/Button_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회의생성"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_conference"></Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
