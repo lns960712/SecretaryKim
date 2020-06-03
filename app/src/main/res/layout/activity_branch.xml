@@ -18,5 +18,14 @@
         android:layout_height="wrap_content"
         android:text="offline"></Button>
 
+    <Button
+        android:id="@+id/Button_email"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문의 하기"
+        android:textStyle="bold"
+        android:textSize="40dp" />
+
 
 </LinearLayout>

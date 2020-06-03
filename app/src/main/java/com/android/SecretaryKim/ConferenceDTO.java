@@ -12,9 +12,7 @@ public class ConferenceDTO {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-    public String getConfId() {
-        return ConfId;
-    }
+    public String getConfId() { return ConfId; }
     public void setConfId(String confId) {
         ConfId = confId;
     }
