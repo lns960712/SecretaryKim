@@ -2,6 +2,7 @@ package com.android.SecretaryKim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -29,8 +30,7 @@ public class MainListActivity extends AppCompatActivity {
     private Button makeButton;
     private ImageView imageView;
     private DatabaseReference mDatabase;
-    private FirebaseAuth mauth;
-
+    private FirebaseAuth mauth; // 지우지 말것
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +42,9 @@ public class MainListActivity extends AppCompatActivity {
         makeButton = findViewById(R.id.makeConference);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.usericon);
-        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         intent = getIntent();
+
+        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         makeButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
@@ -55,18 +56,19 @@ public class MainListActivity extends AppCompatActivity {
 
     protected void restoreData() {
         // 파이어베이스에 데이터 저장
-        FirebaseUser user = mauth.getCurrentUser();
 
         conference = new ConferenceDTO();
         Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
         conference.setTimestamp(tsLong.toString());
         System.out.println("this time is :" + tsLong.toString());
-        conference.setUser(this.user);
+        conference.setUserId(user.getUid());
         conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
-        mDatabase.child("conferences").child(conference.getConfId()).setValue("hello world");
+        mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
+        Log.d("user", conference.getConfId());
+        Log.d("user", user.getUid());
         // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
         // DB상에서 리스트로 보일 필요 있음
-        mDatabase.child("users").child(this.user.getUid()).child("conference").setValue(conference.getConfId());
+        mDatabase.child("users").child(user.getUid()).child("conference").setValue(conference.getConfId());
 
     }
 }

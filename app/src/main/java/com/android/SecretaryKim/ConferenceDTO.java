@@ -2,16 +2,10 @@ package com.android.SecretaryKim;
 
 public class ConferenceDTO {
 
-    private UserDTO user;
+    private String  userId;
     private String timestamp;
     private String ConfId;
-    public UserDTO getUser() {
-        return user;
-    }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
     public String getTimestamp() {
         return timestamp;
     }
@@ -24,4 +18,6 @@ public class ConferenceDTO {
     public void setConfId(String confId) {
         ConfId = confId;
     }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 }
