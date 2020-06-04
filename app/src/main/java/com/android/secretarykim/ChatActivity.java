@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/* 채팅을 기능을 하는 클래스*/
+
 public class ChatActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatActivity";

@@ -8,20 +8,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
 public class CreateConferenceActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatActivity";
-    private RecyclerView conrecyclerView;
-    private RecyclerView.Adapter conAdapter;
-    private RecyclerView.LayoutManager conlayoutManager;
-    private List<ConferenceDTO> conferenceDataset;
     private UserDTO user ;
     private Intent intent;
     private EditText EditText_conference;
@@ -45,13 +38,14 @@ public class CreateConferenceActivity extends AppCompatActivity {
                     System.out.println("this time is :" + tsLong.toString());
                     conference.setUserId(user.getUid());
                     conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
+                    conference.setTitle(title);
                     mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
                     Log.d("user", conference.getConfId());
                     Log.d("user", user.getUid());
                     // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
                     // DB상에서 리스트로 보일 필요 있음
                     mDatabase.child("users").child(user.getUid()).child("conference").setValue(conference.getConfId());
-                    Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
                     intent.putExtra("user", user); // 유저객체넘겨주기
                     startActivity(intent);
                 } else {

@@ -20,7 +20,6 @@
         </activity>
         <activity android:name=".BranchActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".ChatListActivity" />
         <activity android:name=".MainListActivity" />
     </application>
 

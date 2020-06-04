@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.MyViewHolder> {
     private List<ConferenceDTO> conDataset;
+    private String Uid;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -29,8 +30,9 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ConferenceAdapter(List<ConferenceDTO> conferenceDataset, Context context) {
+    public ConferenceAdapter(List<ConferenceDTO> conferenceDataset, Context context, String Uid) {
         conDataset = conferenceDataset;
+        this.Uid = Uid;
     }
 
     // Create new views (invoked by the layout manager)
@@ -48,9 +50,11 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ConferenceDTO conference = conDataset.get(position);
-        holder.TextView_title.setText(conference.getTitle());
-        //상대방이 보낸 메세지는 왼쪽, 내가 보낸 메세지는 오른쪽에 정렬
-            holder.TextView_title.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+        //내가 포함된 회의방표시
+        if(Uid.equals(conference.getUserId())) {
+            holder.TextView_title.setText(conference.getTitle());
+            holder.TextView_title.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        }
 
     }
 

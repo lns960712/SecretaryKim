@@ -35,7 +35,6 @@ import java.util.List;
 public class MainListActivity extends AppCompatActivity {
     private Intent intent;
     private UserDTO user;
-    private ConferenceDTO conference;
     private Button makeButton;
     private ImageView imageView;
     private DatabaseReference mDatabase;
@@ -72,7 +71,7 @@ public class MainListActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         //어댑터 설정
         conferenceDataset = new ArrayList<>();
-        conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this);
+        conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this, user.getUid());
         conrecyclerView.setAdapter(conAdapter);
         //DB연결
         FirebaseDatabase database = FirebaseDatabase.getInstance();

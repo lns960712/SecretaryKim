@@ -2,7 +2,7 @@ package com.android.SecretaryKim;
 
 public class ConferenceDTO {
 
-    private String  userId;
+    private String userId;
     private String timestamp;
     private String ConfId;
     private String title;
