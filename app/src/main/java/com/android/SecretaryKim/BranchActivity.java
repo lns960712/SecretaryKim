@@ -3,7 +3,10 @@ package com.android.SecretaryKim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /*
@@ -24,6 +27,7 @@ public class BranchActivity extends AppCompatActivity {
     private static final String TAG = "BranchActivity";
     private Button Button_online;
     private Button Button_offline;
+    private Button Button_email;
     private UserDTO user;
     private Intent intent;
     @Override
@@ -32,6 +36,7 @@ public class BranchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_branch);
         Button_online = findViewById(R.id.Button_online);
         Button_offline = findViewById(R.id.Button_offline);
+        Button_email = findViewById(R.id.Button_email);
         intent = getIntent();
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         Log.d(TAG, "onCreate: "+ intent.getExtras().getString("nickname"));
@@ -48,5 +53,17 @@ public class BranchActivity extends AppCompatActivity {
             intent.putExtra("user", user); // 유저객체넘겨주기
             startActivity(intent);
         });
+        Button_email.setOnClickListener(new TextView.OnClickListener() {
+            public void onClick(View view) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.setType("plain/text");
+                String[] address = {"email@address.com"};
+                email.putExtra(Intent.EXTRA_EMAIL, address);
+                email.putExtra(Intent.EXTRA_SUBJECT, "test@test");
+                email.putExtra(Intent.EXTRA_TEXT, "내용 미리보기 (미리적을 수 있음)");
+                startActivity(email);
+            }
+        });
+
     }
 }
