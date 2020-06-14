@@ -39,14 +39,15 @@ public class CreateConferenceActivity extends AppCompatActivity {
                     conference.setUserId(user.getUid());
                     conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
                     conference.setTitle(title);
-                    mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
+                    mDatabase.child("conferences").child(conference.getConfId()).push().setValue(conference);
                     Log.d("user", conference.getConfId());
                     Log.d("user", user.getUid());
                     // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
                     // DB상에서 리스트로 보일 필요 있음
                     mDatabase.child("users").child(user.getUid()).child("conference").setValue(conference.getConfId());
                     Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
-                    intent.putExtra("user", user); // 유저객체넘겨주기
+                    intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
+                    intent.putExtra("user", user);//컨퍼런스객체넘겨주기
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "회의제목을 입력해주세요", Toast.LENGTH_SHORT).show();

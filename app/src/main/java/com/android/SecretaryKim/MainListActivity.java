@@ -63,8 +63,8 @@ public class MainListActivity extends AppCompatActivity {
 //            restoreData();
             startActivity(intent);
         });
-//recyclerView
-        conrecyclerView = (RecyclerView) findViewById(R.id.conference_recycler_view);
+        //recyclerView
+        conrecyclerView = findViewById(R.id.conference_recycler_view);
         conrecyclerView.setHasFixedSize(true);
         conlayoutManager = new LinearLayoutManager(this);
         conrecyclerView.setLayoutManager(conlayoutManager);
@@ -78,12 +78,13 @@ public class MainListActivity extends AppCompatActivity {
         myRef = database.getReference();
 
 
+
         //DB에서 데이터 가져오기
         // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("CHAT_LOG", dataSnapshot.getValue().toString());
+                Log.d("CONFERENCE_LOG", dataSnapshot.getValue().toString());
                 ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
                 ((ConferenceAdapter)conAdapter).addConference(conference);
             }

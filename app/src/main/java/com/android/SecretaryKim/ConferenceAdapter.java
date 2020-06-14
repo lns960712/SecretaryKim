@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.MyViewHolder> {
     private List<ConferenceDTO> conDataset;
+    private static View.OnClickListener onClickListener;
     private String Uid;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -26,12 +27,16 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
             super(v);
             TextView_title = v.findViewById(R.id.TextView_title);
             rootView = v;
+            v.setClickable(true);
+            v.setEnabled(true);
+            v.setOnClickListener(onClickListener);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ConferenceAdapter(List<ConferenceDTO> conferenceDataset, Context context, String Uid) {
         conDataset = conferenceDataset;
+//        onClickListener = onClick;
         this.Uid = Uid;
     }
 
@@ -50,10 +55,9 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ConferenceDTO conference = conDataset.get(position);
+        holder.TextView_title.setText(conference.getTitle());
         //내가 포함된 회의방표시
         if(Uid.equals(conference.getUserId())) {
-            holder.TextView_title.setText(conference.getTitle());
-            holder.TextView_title.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         }
 
     }
@@ -68,7 +72,7 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         return conDataset != null ? conDataset.get(position) : null;
     }
 
-    public void addConference(ConferenceDTO conference){//리사이클러뷰 갱신용 이전문자를 보이게 함
+    public void addConference(ConferenceDTO conference){//리사이클러뷰 갱신용 이전에 생성된 회의방을 보이게 함
         conDataset.add(conference);
         notifyItemInserted(conDataset.size()-1);
     }

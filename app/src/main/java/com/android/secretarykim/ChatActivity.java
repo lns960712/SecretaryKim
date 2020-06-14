@@ -31,6 +31,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager clayoutManager;
     private List<ChatDTO> chatDataset;
     private UserDTO user ;
+    private ConferenceDTO conference;
     private Intent intent;
     private EditText EditText_chat;
     private Button Button_send;
@@ -45,12 +46,15 @@ public class ChatActivity extends AppCompatActivity {
         EditText_chat = findViewById(R.id.EditText_chat);
         intent = getIntent();
         user = (UserDTO) intent.getSerializableExtra("user");
+        conference = (ConferenceDTO) intent.getSerializableExtra("conference");
         Button_send.setOnClickListener(v -> {
             String message = EditText_chat.getText().toString();
             if(message!=null) {
                 ChatDTO chat = new ChatDTO();
+                chat.setNickname(user.getNickname());
                 chat.setUser(user);
                 chat.setMessage(message);
+                myRef.child("conferences").child(conference.getConfId()).child("chat").push().setValue(chat);
                 myRef.push().setValue(chat);//DB에 값 넣기
                 EditText_chat.setText("");
             }
@@ -71,12 +75,13 @@ public class ChatActivity extends AppCompatActivity {
 
 
         //DB에서 데이터 가져오기
-        // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
+
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("CHAT_LOG", dataSnapshot.getValue().toString());
-                ChatDTO chat = dataSnapshot.getValue(ChatDTO.class);
+                // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
+                ChatDTO chat = dataSnapshot.child("conferences").child(conference.getConfId()).child("chat").getValue(ChatDTO.class);
                 ((ChatAdapter)cAdapter).addChat(chat);
             }
             @Override
