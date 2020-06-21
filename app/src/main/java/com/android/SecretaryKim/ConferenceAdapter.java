@@ -22,21 +22,23 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView TextView_title;
-        public View rootView;
+        public View rootView;//목록을 클릭할때 몇번째 목록을 클릭했는지 알기위해 선언
         public MyViewHolder(View v) {
             super(v);
             TextView_title = v.findViewById(R.id.TextView_title);
-            rootView = v;
-            v.setClickable(true);
-            v.setEnabled(true);
+            rootView = v;//findViewById를 안해줘도 됨
+            //onBindViewHolder에 리스너를 안달아주는 이유는 퍼포먼스?를 위해서 그런거임
+            //onBindViewHolder에 리스너를 달아주면 몇번째 항목을 클릭했는지 알기 쉽게됨
+            v.setClickable(true);//클릭을 할 수 있게함
+            v.setEnabled(true);//활성화여부
             v.setOnClickListener(onClickListener);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ConferenceAdapter(List<ConferenceDTO> conferenceDataset, Context context, String Uid) {
+    public ConferenceAdapter(List<ConferenceDTO> conferenceDataset, Context context, String Uid, View.OnClickListener onClick) {
         conDataset = conferenceDataset;
-//        onClickListener = onClick;
+        onClickListener = onClick;
         this.Uid = Uid;
     }
 
@@ -55,10 +57,12 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ConferenceDTO conference = conDataset.get(position);
+
         holder.TextView_title.setText(conference.getTitle());
+        holder.rootView.setTag(position);
         //내가 포함된 회의방표시
-        if(Uid.equals(conference.getUserId())) {
-        }
+//        if(Uid.equals(conference.getUserId())) {
+//        }
 
     }
 
@@ -67,7 +71,7 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
     public int getItemCount() {
         return conDataset==null ? 0: conDataset.size();
     }
-
+//어댑터의 데이터를 다른 클래스에서 사용할 수 있도록 한다.
     public ConferenceDTO getConference(int position){
         return conDataset != null ? conDataset.get(position) : null;
     }

@@ -3,6 +3,7 @@ package com.android.SecretaryKim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -50,10 +51,11 @@ public class MainListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_list);
 
         mauth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //DB연결
+        mDatabase = FirebaseDatabase.getInstance().getReference("conferences");
 
         makeButton = findViewById(R.id.makeConference);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.usericon);
         intent = getIntent();
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
@@ -71,39 +73,43 @@ public class MainListActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         //어댑터 설정
         conferenceDataset = new ArrayList<>();
-        conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this, user.getUid());
+        conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this, user.getUid(), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object object = v.getTag();
+                if(object!=null){//null체크를 해줘야 좋다.
+                    int position = (int) object;
+                    ConferenceDTO conference = ((ConferenceAdapter)conAdapter).getConference(position);//선언이 RecyclerView.Adapter로 되어 있어서 형변환이 필요함
+                    Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
+                    intent.putExtra("user", user); // 유저객체넘겨주기
+                    intent.putExtra("conference",conference);
+                    startActivity(intent);
+                }
+            }
+        });
         conrecyclerView.setAdapter(conAdapter);
         //DB연결
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-
-
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference();
 
         //DB에서 데이터 가져오기
         // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
-        myRef.addChildEventListener(new ChildEventListener() {
+        mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("CONFERENCE_LOG", dataSnapshot.getValue().toString());
+                Log.d("CONFERENCE_LOG : ", dataSnapshot.getKey());
                 ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
+//                ConferenceDTO conference = dataSnapshot.child("conferences").getValue(ConferenceDTO.class);
                 ((ConferenceAdapter)conAdapter).addConference(conference);
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
     }
