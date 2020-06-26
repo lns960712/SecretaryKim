@@ -35,18 +35,30 @@ public class ChatActivity extends AppCompatActivity {
     private Intent intent;
     private EditText EditText_chat;
     private Button Button_send;
-    private DatabaseReference myRef;
-    String nickname;
-
+    private DatabaseReference chatRef;
+    private DatabaseReference userRef;
+    private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Button_send = findViewById(R.id.Button_send);
         EditText_chat = findViewById(R.id.EditText_chat);
+
+        //DB연결
+        database = FirebaseDatabase.getInstance();
+//        chatRef = database.getReference("chat");//가져올 디비 경로설정
+//        chatRef = database.getReference();
+        userRef = database.getReference("users");//가져올 디비 경로설정
         intent = getIntent();
-        user = (UserDTO) intent.getSerializableExtra("user");
-        conference = (ConferenceDTO) intent.getSerializableExtra("conference");
+
+//        user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
+        conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값받아오기
+//        chatRef = database.getReference();
+        chatRef = database.getReference().child("conferences").child(conference.getConfId()).child("chat");
+        user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
+        Log.d("conference",conference.getTitle());
+        Log.d("conferenceID",conference.getConfId());
         Button_send.setOnClickListener(v -> {
             String message = EditText_chat.getText().toString();
             if(message!=null) {
@@ -54,11 +66,12 @@ public class ChatActivity extends AppCompatActivity {
                 chat.setNickname(user.getNickname());
                 chat.setUser(user);
                 chat.setMessage(message);
-                myRef.child("conferences").child(conference.getConfId()).child("chat").push().setValue(chat);
-                myRef.push().setValue(chat);//DB에 값 넣기
+                chatRef.push().setValue(chat);
+//                myRef.push().setValue(chat);//DB에 값 넣기
                 EditText_chat.setText("");
             }
         });
+
         //recyclerView
         crecyclerView = (RecyclerView) findViewById(R.id.chat_recycler_view);
         crecyclerView.setHasFixedSize(true);
@@ -67,41 +80,46 @@ public class ChatActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         //어댑터 설정
         chatDataset = new ArrayList<>();
+//        chatDataset = myRef.child("conferences").child(conference.getConfId()).child("chat").getDatabase();
         cAdapter = new ChatAdapter(chatDataset, ChatActivity.this, user.getNickname());
         crecyclerView.setAdapter(cAdapter);
-        //DB연결
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
 
 
         //DB에서 데이터 가져오기
-
-        myRef.addChildEventListener(new ChildEventListener() {
+        chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("CHAT_LOG", dataSnapshot.getValue().toString());
+//                Log.d("CHAT_LOG : ", dataSnapshot.child("conferences").child(conference.getConfId()).getValue().toString());
                 // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
-                ChatDTO chat = dataSnapshot.child("conferences").child(conference.getConfId()).child("chat").getValue(ChatDTO.class);
+//                ChatDTO chat = dataSnapshot.child("conferences").child(conference.getConfId()).getValue(ChatDTO.class);
+//                ChatDTO chat = dataSnapshot.child(conference.getConfId()).child("chat").getValue(ChatDTO.class);
+                ChatDTO chat = dataSnapshot.getValue(ChatDTO.class);
                 ((ChatAdapter)cAdapter).addChat(chat);
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+        userRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("USER_LOG : ", dataSnapshot.child("users").getKey());
+                // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
+                UserDTO user = dataSnapshot.child("conferences").child(conference.getConfId()).child("chat").getValue(UserDTO.class);
             }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
-
-
 }

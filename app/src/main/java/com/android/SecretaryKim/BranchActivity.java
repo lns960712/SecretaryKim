@@ -39,20 +39,20 @@ public class BranchActivity extends AppCompatActivity {
         Button_offline = findViewById(R.id.Button_offline);
         Button_email = findViewById(R.id.Button_email);
         intent = getIntent();
-        conference = (ConferenceDTO) intent.getSerializableExtra("conference");
-        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
-        Log.d(TAG, "onCreate: "+ intent.getExtras().getString("nickname"));
-        Log.d(TAG, "onCreate: "+ intent.getExtras().getString("email"));
-
+        conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값 넘겨받기
+        user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
         Button_online.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
             intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
+            Log.d("user",user.getNickname());
+            Log.d("user",user.getEmail());
 //            intent.putExtra("email", this.intent.getExtras().getString("email")); // 이메일 넘겨주기
             startActivity(intent);
         });
         Button_offline.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
+            intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
             intent.putExtra("user", user); // 유저객체넘겨주기
             startActivity(intent);
         });

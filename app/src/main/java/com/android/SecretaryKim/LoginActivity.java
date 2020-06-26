@@ -24,8 +24,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     Splash 를 제외하고 가장 처음 화면이다
@@ -39,16 +45,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private SignInButton btn_google;
     private Button loginButton;
+    private List<UserDTO> userlist;
     private UserDTO user;
+    private FirebaseDatabase database;
     private DatabaseReference mDatabase;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        database = FirebaseDatabase.getInstance();//로그인하면 회의정보가 지워지는 문제때문에 위치를 restoreData메소드에서 옮김
+        mDatabase = database.getReference("users");
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -61,15 +68,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         auth = FirebaseAuth.getInstance(); // 인증 객체 초기화
         btn_google = findViewById(R.id.sign_in_button);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
         // 구글 로그인 버튼 클릭했을때
         btn_google.setOnClickListener(view -> {
             Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
             Log.v("user", "클릭함");
             startActivityForResult(intent, RC_SIGN_IN);
         });
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("USER_LOG : ", dataSnapshot.getKey());
+                userlist = new ArrayList<>();
+                userlist.add(dataSnapshot.getValue(UserDTO.class));
+            }
 
-
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
     }
 
     @Override
@@ -93,8 +115,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void restoreData (UserDTO user) { // Firebase에 데이터 유저 데이터 저장
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(user.getUid()).setValue(user);
+        mDatabase.child(user.getUid()).setValue(user);
     }
 
     private void resultLogin(GoogleSignInAccount account) {
@@ -113,7 +134,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             user.setUid(userData.getUid());
                             intent.putExtra("user", user); // 유저정보 넘겨주기
                             intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // String.valueOf 특정 자료형을 String 형태로 변형
-                            restoreData(user);
+                            //이미 등록된 아이디라면 등록하지않는다. 좀 더 간단히 할 수 있을거같은데
+                            if(userlist!=null){
+                                boolean isadded = false;
+                                for(int i=0; i<userlist.size(); i++){
+                                    if(userlist.get(i).getUid().equals(user.getUid())){
+                                        isadded = true;
+                                    }
+                                }
+                                if(isadded==false){
+                                    restoreData(user);
+                                }
+                            }else{
+                                restoreData(user);
+                            }
+
+//                            restoreData(user);
                             startActivity(intent);
                         }
                         else { // 로그인이 실패 했으면
@@ -123,8 +159,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
 }
