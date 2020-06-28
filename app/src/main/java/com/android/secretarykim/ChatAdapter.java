@@ -35,13 +35,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public ChatAdapter(List<ChatDTO> chatDataset, Context context, String myNickname) {
         cDataset = chatDataset;
         this.myNickname = myNickname;
+//        this.user = user;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ChatAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat, parent, false);//어떤 레이아웃을 쓸것인가?
+        LinearLayout v ;
+        v = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat, parent, false);//어떤 레이아웃을 쓸것인가?
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -51,17 +53,30 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {//데이터를 세팅한다.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
         ChatDTO chat= cDataset.get(position);
         holder.TextView_nickname.setText(chat.getUser().getNickname());
         holder.TextView_message.setText(chat.getMessage());
         //상대방이 보낸 메세지는 왼쪽, 내가 보낸 메세지는 오른쪽에 정렬
-        if(chat.getUser().getNickname().equals(this.myNickname)){
-            holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-            holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+        if(chat.isHighlight()){
+            holder.TextView_message.setTextColor(0xffff0000);//빨강(0xffff0000)
+            if(chat.getUser().getNickname().equals(this.myNickname)){
+                holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            }else{
+                holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            }
         }else{
-            holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            if(chat.getUser().getNickname().equals(this.myNickname)){
+                holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            }else{
+                holder.TextView_nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                holder.TextView_message.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            }
         }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

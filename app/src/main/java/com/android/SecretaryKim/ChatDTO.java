@@ -8,14 +8,19 @@ public class ChatDTO implements Serializable {
     private String message;
     private String nickname;
     private UserDTO user;
+    private boolean highlight;
 
-    public String getNickname() {return nickname;}
-    public void setNickname(String nickname) {this.nickname = nickname;}
+    public boolean isHighlight() { return highlight; }
+    public UserDTO getUser() { return user; }
     public String getMessage() { return message; }
+    public String getNickname() {return nickname;}
+
+    public void setNickname(String nickname) {this.nickname = nickname;}
     public void setMessage(String message) {
         this.message = message;
     }
-    public UserDTO getUser() { return user; }
     public void setUser(UserDTO user) { this.user = user; }
+    public void setHighlight(boolean highlight) { this.highlight = highlight; }
+
 
 }
