@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /*
     회의에 관한 정보를 보여주는 액티비티
@@ -28,9 +32,12 @@ public class BranchActivity extends AppCompatActivity {
     private Button Button_online;
     private Button Button_offline;
     private Button Button_email;
+    private Button Button_finish_conference;
+    private TextView TextView_isfinish;
     private UserDTO user;
     private ConferenceDTO conference;
     private Intent intent;
+    private DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +45,18 @@ public class BranchActivity extends AppCompatActivity {
         Button_online = findViewById(R.id.Button_online);
         Button_offline = findViewById(R.id.Button_offline);
         Button_email = findViewById(R.id.Button_email);
+        Button_finish_conference = findViewById(R.id.Button_finish_conference);
+        TextView_isfinish = findViewById(R.id.TextView_isfinish);
         intent = getIntent();
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값 넘겨받기
         user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
+        //회의 진행여부표시
+        if(conference.isFinish()){
+            TextView_isfinish.setText("종료된 회의");
+        }else{
+            TextView_isfinish.setText("진행중인 회의");
+        }
+        //온라인 회의로(채팅기능연결)
         Button_online.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
@@ -50,11 +66,20 @@ public class BranchActivity extends AppCompatActivity {
 //            intent.putExtra("email", this.intent.getExtras().getString("email")); // 이메일 넘겨주기
             startActivity(intent);
         });
+        //오프라인 회의로(녹음기능연결)
         Button_offline.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), OfflineStartActivity.class);
             intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
             intent.putExtra("user", user); // 유저객체넘겨주기
             startActivity(intent);
+        });
+        //회의종료시키기
+        Button_finish_conference.setOnClickListener(v -> {
+            myRef = FirebaseDatabase.getInstance().getReference();
+            conference.setFinish(true);
+            myRef.child("conferences").child(conference.getConfId()).setValue(conference);
+            Toast.makeText(getApplicationContext(), "회의가 종료되었습니다.", Toast.LENGTH_SHORT).show();
+
         });
         Button_email.setOnClickListener(new TextView.OnClickListener() {
             public void onClick(View view) {
