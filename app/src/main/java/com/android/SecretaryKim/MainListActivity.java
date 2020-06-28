@@ -1,18 +1,14 @@
 package com.android.SecretaryKim;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +38,7 @@ public class MainListActivity extends AppCompatActivity {
     private UserDTO user;
     private Button makeButton;
     private ImageView imageView;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mConfDatabase; // 회의방 목록 가져오는 Reference
     private RecyclerView conrecyclerView;
     private RecyclerView.Adapter conAdapter;
     private RecyclerView.LayoutManager conlayoutManager;
@@ -56,7 +52,7 @@ public class MainListActivity extends AppCompatActivity {
 
         mauth = FirebaseAuth.getInstance();
         //DB연결
-        mDatabase = FirebaseDatabase.getInstance().getReference("conferences");
+        mConfDatabase = FirebaseDatabase.getInstance().getReference("conferences");
 
         makeButton = findViewById(R.id.makeConference);
         imageView = findViewById(R.id.imageView);
@@ -70,7 +66,7 @@ public class MainListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //recyclerView
+        //Conference recyclerView
         conrecyclerView = findViewById(R.id.conference_recycler_view);
         conrecyclerView.setHasFixedSize(true);
         conlayoutManager = new LinearLayoutManager(this);
@@ -93,13 +89,11 @@ public class MainListActivity extends AppCompatActivity {
             }
         });
         conrecyclerView.setAdapter(conAdapter);
-        //DB연결
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        myRef = database.getReference();
 
-        //DB에서 데이터 가져오기
+
+        // DB에서 회의방 데이터 가져오기
         // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mConfDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("CONFERENCE_LOG : ", dataSnapshot.getKey());
@@ -116,6 +110,8 @@ public class MainListActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+
+
 
     }
 

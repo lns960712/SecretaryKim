@@ -13,6 +13,12 @@
         android:textSize="40sp"
         android:textAlignment="center"
         android:text=""></TextView>
+
+    <Button
+        android:id="@+id/Button_user_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초대하기" />
     <Button
         android:id="@+id/Button_online"
         android:layout_width="wrap_content"

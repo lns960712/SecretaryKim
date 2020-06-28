@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class BranchActivity extends AppCompatActivity {
 
     private static final String TAG = "BranchActivity";
+    private Button Button_user_list;
     private Button Button_online;
     private Button Button_offline;
     private Button Button_email;
@@ -42,6 +43,7 @@ public class BranchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch);
+        Button_user_list = findViewById(R.id.Button_user_list);
         Button_online = findViewById(R.id.Button_online);
         Button_offline = findViewById(R.id.Button_offline);
         Button_email = findViewById(R.id.Button_email);
@@ -56,6 +58,14 @@ public class BranchActivity extends AppCompatActivity {
         }else{
             TextView_isfinish.setText("진행중인 회의");
         }
+        //사용자 초대 리스트로
+        Button_user_list.setOnClickListener(v -> {
+            Log.d("user", "UserList로 넘어감");
+            Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+            intent.putExtra("user", user); // 유저객체넘겨주기
+
+            startActivity(intent);
+        });
         //온라인 회의로(채팅기능연결)
         Button_online.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
