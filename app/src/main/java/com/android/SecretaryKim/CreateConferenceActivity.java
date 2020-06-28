@@ -39,6 +39,7 @@ public class CreateConferenceActivity extends AppCompatActivity {
                     conference.setUserId(user.getUid());
                     conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
                     conference.setTitle(title);
+                    conference.setFinish(false);
 //                    conference.setChat(null);
 //                    mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
                     mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);

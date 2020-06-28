@@ -10,15 +10,19 @@ public class ConferenceDTO implements Serializable {
     private String timestamp;
     private String ConfId;
     private String title;
-//    private ChatDTO chat;
+    private boolean finish;
+    //    private ChatDTO chat;
 
+    public boolean isFinish() { return finish; }
     public String getTimestamp() { return timestamp; }
-    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
     public String getConfId() { return ConfId; }
-    public void setConfId(String confId) { ConfId = confId; }
     public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
     public String getTitle() { return title; }
+
+    public void setFinish(boolean finish) { this.finish = finish; }
+    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
+    public void setConfId(String confId) { ConfId = confId; }
+    public void setUserId(String userId) { this.userId = userId; }
     public void setTitle(String title) { this.title = title; }
 //    public ChatDTO getChat() { return chat; }
 //    public void setChat(ChatDTO chat) { this.chat = chat; }
