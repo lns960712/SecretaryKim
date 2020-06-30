@@ -38,7 +38,7 @@ public class MainListActivity extends AppCompatActivity {
     private UserDTO user;
     private Button makeButton;
     private ImageView imageView;
-    private DatabaseReference mConfDatabase; // 회의방 목록 가져오는 Reference
+    private DatabaseReference mDatabase;
     private RecyclerView conrecyclerView;
     private RecyclerView.Adapter conAdapter;
     private RecyclerView.LayoutManager conlayoutManager;
