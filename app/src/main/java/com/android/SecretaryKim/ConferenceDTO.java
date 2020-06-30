@@ -3,6 +3,7 @@ package com.android.SecretaryKim;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @IgnoreExtraProperties
@@ -17,6 +18,9 @@ public class ConferenceDTO implements Serializable {
     private String title;//회의방 제목
     private boolean finish;//회의종료여부표시
     //    private ChatDTO chat;
+    public ConferenceDTO(){
+        joinedUserId = new ArrayList<>();
+    }
 
     public List<String> getJoinedUserId() { return joinedUserId; }
     public String getUserId() { return userId; }

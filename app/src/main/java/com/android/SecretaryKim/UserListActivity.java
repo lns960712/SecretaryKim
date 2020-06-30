@@ -45,12 +45,13 @@ public class UserListActivity extends AppCompatActivity {
         CheckBox_invite = findViewById(R.id.CheckBox_invite);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mconfDatabase = FirebaseDatabase.getInstance().getReference("conferences");
+        intent = getIntent();
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         Button_invite.setOnClickListener(v ->{
 //            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
         });
 
-        intent = getIntent();
+
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
