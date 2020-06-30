@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -63,6 +64,7 @@ public class BranchActivity extends AppCompatActivity {
             Log.d("user", "UserList로 넘어감");
             Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
+            intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
 
             startActivity(intent);
         });

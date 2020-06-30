@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.SecretaryKim.DTO.UserDTO;
 
 import java.util.List;
 
@@ -19,10 +21,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView TextView_title;
+        public CheckBox CheckBox_invite;
         public View rootView;
         public MyViewHolder(View v) {
             super(v);
             TextView_title = v.findViewById(R.id.TextView_title);
+            CheckBox_invite = v.findViewById(R.id.CheckBox_invite);
             rootView = v;
             v.setClickable(true);
             v.setEnabled(true);//활성화여부
@@ -47,6 +51,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         UserDTO users = uDataset.get(position);
         holder.TextView_title.setText(users.getNickname());
+        holder.CheckBox_invite.setChecked(false);
         holder.rootView.setTag(position);
     }
 
