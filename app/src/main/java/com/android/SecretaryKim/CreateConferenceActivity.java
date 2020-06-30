@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,6 +22,7 @@ public class CreateConferenceActivity extends AppCompatActivity {
     private EditText EditText_conference;
     private DatabaseReference mDatabase;
     private Button Button_create;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +44,11 @@ public class CreateConferenceActivity extends AppCompatActivity {
                     conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
                     conference.setTitle(title);
                     conference.setFinish(false);
-//                    conference.setChat(null);
-//                    mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
+
                     mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
                     Log.d("user", conference.getConfId());
                     Log.d("user", user.getUid());
-                    // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
-                    // DB상에서 리스트로 보일 필요 있음
+
                     mDatabase.child("users").child(user.getUid()).child("conference").push().setValue(conference.getConfId());
                     Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
                     intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기

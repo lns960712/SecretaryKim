@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.SecretaryKim.DTO.ChatDTO;
+
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
@@ -35,7 +37,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public ChatAdapter(List<ChatDTO> chatDataset, Context context, String myNickname) {
         cDataset = chatDataset;
         this.myNickname = myNickname;
-//        this.user = user;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,12 +52,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {//데이터를 세팅한다.
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
         ChatDTO chat= cDataset.get(position);
         holder.TextView_nickname.setText(chat.getUser().getNickname());
         holder.TextView_message.setText(chat.getMessage());
+
         //상대방이 보낸 메세지는 왼쪽, 내가 보낸 메세지는 오른쪽에 정렬
         if(chat.isHighlight()){
             holder.TextView_message.setTextColor(0xffff0000);//빨강(0xffff0000)

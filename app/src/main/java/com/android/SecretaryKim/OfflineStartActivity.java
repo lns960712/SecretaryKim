@@ -71,7 +71,6 @@ public class OfflineStartActivity extends AppCompatActivity {
                     matches = new ArrayList<>();
                     timeThread = new Thread(new timeThread());
                     timeThread.start();
-
                     startButton.setText("회의 중지");
 
                 } else {
@@ -88,7 +87,6 @@ public class OfflineStartActivity extends AppCompatActivity {
                 isStarted = false;
 
                 String str = "";
-
                 for(String s : matches) {
                     str += s + " ";
                 }
@@ -103,7 +101,6 @@ public class OfflineStartActivity extends AppCompatActivity {
 
                 startActivity(in);
             }
-
         });
 
         sttStartButton.setOnClickListener(v -> {
@@ -121,30 +118,20 @@ public class OfflineStartActivity extends AppCompatActivity {
                     sttStartButton.setText("음성 인식 재개");
                 }
             }
-
         });
-
     }
 
     private RecognitionListener listener = new RecognitionListener() {
         @Override
-        public void onReadyForSpeech(Bundle params) {
-        }
-
+        public void onReadyForSpeech(Bundle params) {}
         @Override
         public void onBeginningOfSpeech() {}
-
         @Override
         public void onRmsChanged(float rmsdB) {}
-
         @Override
         public void onBufferReceived(byte[] buffer) {}
-
         @Override
-        public void onEndOfSpeech() {
-
-        }
-
+        public void onEndOfSpeech() {}
         @Override
         public void onError(int error) {
             String message;
@@ -181,6 +168,7 @@ public class OfflineStartActivity extends AppCompatActivity {
                     message = "알 수 없는 오류임";
                     break;
             }
+            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -198,7 +186,6 @@ public class OfflineStartActivity extends AppCompatActivity {
 
         @Override
         public void onPartialResults(Bundle partialResults) {}
-
         @Override
         public void onEvent(int eventType, Bundle params) {}
     };
@@ -230,7 +217,6 @@ public class OfflineStartActivity extends AppCompatActivity {
                     Message msg = new Message();
                     msg.arg1 = i++;
                     handler.sendMessage(msg);
-
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
