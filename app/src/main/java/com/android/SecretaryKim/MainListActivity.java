@@ -38,7 +38,7 @@ public class MainListActivity extends AppCompatActivity {
     private UserDTO user;
     private Button makeButton;
     private ImageView imageView;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mConfDatabase;
     private RecyclerView conrecyclerView;
     private RecyclerView.Adapter conAdapter;
     private RecyclerView.LayoutManager conlayoutManager;
@@ -99,7 +99,9 @@ public class MainListActivity extends AppCompatActivity {
                 Log.d("CONFERENCE_LOG : ", dataSnapshot.getKey());
                 ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
 //                ConferenceDTO conference = dataSnapshot.child("conferences").getValue(ConferenceDTO.class);
-                ((ConferenceAdapter)conAdapter).addConference(conference);
+                if(conference.getUserId().equals(user.getUid())) {
+                    ((ConferenceAdapter) conAdapter).addConference(conference);
+                }
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }

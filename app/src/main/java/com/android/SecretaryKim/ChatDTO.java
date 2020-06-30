@@ -5,10 +5,10 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
 @IgnoreExtraProperties
 public class ChatDTO implements Serializable {
-    private String message;
-    private String nickname;
-    private UserDTO user;
-    private boolean highlight;
+    private String message;//채팅
+    private String nickname;//유저닉네임
+    private UserDTO user;//유져정보
+    private boolean highlight;//강조채팅표시
 
     public boolean isHighlight() { return highlight; }
     public UserDTO getUser() { return user; }
