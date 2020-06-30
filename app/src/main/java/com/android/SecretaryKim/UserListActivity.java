@@ -53,6 +53,8 @@ public class UserListActivity extends AppCompatActivity {
         Button_invite.setOnClickListener(v ->{
 //            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
             mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue(joinedUserId);
+            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+            startActivity(intent);
         });
 
         //userList recyclerView를 위한 어댑터 설정

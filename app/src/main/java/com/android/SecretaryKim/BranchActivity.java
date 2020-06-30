@@ -65,7 +65,6 @@ public class BranchActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
             intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
-
             startActivity(intent);
         });
         //온라인 회의로(채팅기능연결)
