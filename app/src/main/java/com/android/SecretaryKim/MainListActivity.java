@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +39,7 @@ public class MainListActivity extends AppCompatActivity {
     private UserDTO user;
     private Button makeButton;
     private ImageView imageView;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mConfDatabase;
     private RecyclerView conrecyclerView;
     private RecyclerView.Adapter conAdapter;
     private RecyclerView.LayoutManager conlayoutManager;
