@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 
 import java.util.List;
 
@@ -57,14 +58,8 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ConferenceDTO conference = conDataset.get(position);
-
-
         holder.TextView_title.setText(conference.getTitle());
         holder.rootView.setTag(position);
-        //내가 포함된 회의방표시
-//        if(Uid.equals(conference.getUserId())) {
-//        }
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -72,7 +67,8 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
     public int getItemCount() {
         return conDataset==null ? 0: conDataset.size();
     }
-//어댑터의 데이터를 다른 클래스에서 사용할 수 있도록 한다.
+
+    //어댑터의 데이터를 다른 클래스에서 사용할 수 있도록 한다.
     public ConferenceDTO getConference(int position){
         return conDataset != null ? conDataset.get(position) : null;
     }

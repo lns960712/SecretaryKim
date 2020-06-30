@@ -7,17 +7,13 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.SecretaryKim.DTO.UserDTO;
-
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder> {
     private List<UserDTO> uDataset;
     private static View.OnClickListener onClickListener;
-    private String Uid;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView TextView_title;
@@ -37,7 +33,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     public UserListAdapter(List<UserDTO> userDataset, Context context, String Uid, View.OnClickListener onClick) {
         uDataset = userDataset;
         onClickListener = onClick;
-        this.Uid = Uid;
     }
 
     @Override
@@ -59,11 +54,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     public int getItemCount() {
         return uDataset==null ? 0: uDataset.size();
     }
-
     public UserDTO getUserDTO(int position) {
         return uDataset != null ? uDataset.get(position) : null;
     }
-
     public void addUsers(UserDTO users){//리사이클러뷰 갱신용 이전에 생성된 회의방을 보이게 함
         uDataset.add(users);
         notifyItemInserted(uDataset.size()-1);

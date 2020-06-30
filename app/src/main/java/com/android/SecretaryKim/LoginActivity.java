@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private SignInButton btn_google;
-    private Button loginButton;
     private List<UserDTO> userlist;
     private UserDTO user;
     private FirebaseDatabase database;
@@ -110,8 +109,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.v("user", "인증성공");
                 resultLogin(account); // 로그인 결과 값 출력 수행하라는 메소드
             }
-
-
         }
     }
 
@@ -143,14 +140,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         isadded = true;
                                     }
                                 }
-                                if(isadded==false){
-                                    restoreData(user);
-                                }
-                            }else{
-                                restoreData(user);
-                            }
+                                if(isadded==false) restoreData(user);
+                            }else restoreData(user);
 
-//                            restoreData(user);
                             startActivity(intent);
                         }
                         else { // 로그인이 실패 했으면
@@ -160,11 +152,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
-
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 }

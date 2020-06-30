@@ -1,4 +1,4 @@
-package com.android.SecretaryKim;
+package com.android.SecretaryKim.DTO;
 
 import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.IgnoreExtraProperties;

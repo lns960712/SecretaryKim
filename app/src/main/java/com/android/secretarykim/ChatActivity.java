@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.SecretaryKim.DTO.ChatDTO;
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +41,6 @@ public class ChatActivity extends AppCompatActivity {
     private EditText EditText_chat;
     private Button Button_send;
     private DatabaseReference chatRef;
-    private DatabaseReference userRef;
     private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +52,9 @@ public class ChatActivity extends AppCompatActivity {
 
         //DB연결
         database = FirebaseDatabase.getInstance();
-//        chatRef = database.getReference("chat");//가져올 디비 경로설정
-//        chatRef = database.getReference();
-        userRef = database.getReference("users");//가져올 디비 경로설정
         intent = getIntent();
 
-//        user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값받아오기
-//        chatRef = database.getReference();
         chatRef = database.getReference().child("conferences").child(conference.getConfId()).child("chat");
         user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
         Log.d("conference",conference.getTitle());
@@ -86,10 +82,9 @@ public class ChatActivity extends AppCompatActivity {
         crecyclerView.setHasFixedSize(true);
         clayoutManager = new LinearLayoutManager(this);
         crecyclerView.setLayoutManager(clayoutManager);
-        // specify an adapter (see also next example)
+
         //어댑터 설정
         chatDataset = new ArrayList<>();
-//        chatDataset = myRef.child("conferences").child(conference.getConfId()).child("chat").getDatabase();
         cAdapter = new ChatAdapter(chatDataset, ChatActivity.this, user.getNickname());
         crecyclerView.setAdapter(cAdapter);
 
@@ -104,22 +99,6 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatDTO chat = dataSnapshot.child(conference.getConfId()).child("chat").getValue(ChatDTO.class);
                 ChatDTO chat = dataSnapshot.getValue(ChatDTO.class);
                 ((ChatAdapter)cAdapter).addChat(chat);
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-        userRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("USER_LOG : ", dataSnapshot.child("users").getKey());
-                // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
-                UserDTO user = dataSnapshot.child("conferences").child(conference.getConfId()).child("chat").getValue(UserDTO.class);
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }

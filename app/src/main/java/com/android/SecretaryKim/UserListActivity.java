@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +39,6 @@ public class UserListActivity extends AppCompatActivity {
     private List<UserDTO> userDataset;
     private List<String> joinedUserNickname;
 
-
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -51,12 +51,10 @@ public class UserListActivity extends AppCompatActivity {
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값받아오기
         Button_invite.setOnClickListener(v ->{
-//            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
             mconfDatabase.child(conference.getConfId()).child("joinedUserNickname").setValue(joinedUserNickname);
             Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
             intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
-//            intent.putExtra("joinedUserId", joinedUserId.toString());
             startActivity(intent);
         });
 
@@ -79,7 +77,6 @@ public class UserListActivity extends AppCompatActivity {
                     for (int i = 0; i< joinedUserNickname.size(); i ++) {
                         Log.d("User List :", joinedUserNickname.get(i));
                     }
-//                    CheckBox_invite.setChecked(true);
                 }
             }
         });

@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 import com.android.SecretaryKim.DTO.UserDTO;
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +38,6 @@ import java.util.List;
  */
 
 public class BranchActivity extends AppCompatActivity {
-
     private static final String TAG = "BranchActivity";
     private Button Button_user_list;
     private Button Button_online;
@@ -51,9 +50,7 @@ public class BranchActivity extends AppCompatActivity {
     private ConferenceDTO conference;
     private Intent intent;
     private DatabaseReference myRef;
-    private DatabaseReference yourRef;
     private List<String> blah;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +66,10 @@ public class BranchActivity extends AppCompatActivity {
         intent = getIntent();
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값 넘겨받기
         user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
-//        myRef = FirebaseDatabase.getInstance().getReference("conferences/"+conference.getConfId()).child("joinedUserId");
         myRef = FirebaseDatabase.getInstance().getReference("conferences").child(conference.getConfId()).child("joinedUserNickname");
         Log.d("UserLog:", "conferences/"+ conference.getConfId());
-        yourRef = FirebaseDatabase.getInstance().getReference("users");
         blah = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-
 
         //회의 진행여부표시
         if(conference.isFinish()){
@@ -91,30 +85,18 @@ public class BranchActivity extends AppCompatActivity {
                 System.out.println(dataSnapshot);
                 blah = Collections.singletonList(dataSnapshot.getValue().toString());
                 sb.append(blah);
-                System.out.println("여기야"+blah);
                 Log.d("진짜", String.valueOf(sb));
                 TextView_contributors.setText("참여자 : "+String.valueOf(sb));
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
         //사용자 초대 리스트로

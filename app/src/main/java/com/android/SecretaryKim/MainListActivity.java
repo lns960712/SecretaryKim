@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.SecretaryKim.DTO.ConferenceDTO;
 import com.android.SecretaryKim.DTO.UserDTO;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,14 +44,11 @@ public class MainListActivity extends AppCompatActivity {
     private RecyclerView.Adapter conAdapter;
     private RecyclerView.LayoutManager conlayoutManager;
     private List<ConferenceDTO> conferenceDataset;
-    private DatabaseReference myRef;
-    private FirebaseAuth mauth; // 지우지 말것
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
-
-        mauth = FirebaseAuth.getInstance();
         //DB연결
         mConfDatabase = FirebaseDatabase.getInstance().getReference("conferences");
 
@@ -63,7 +60,6 @@ public class MainListActivity extends AppCompatActivity {
         makeButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), CreateConferenceActivity.class);
             intent.putExtra("user", user); // 유저객체넘겨주기
-//            restoreData();
             startActivity(intent);
         });
 
@@ -72,7 +68,7 @@ public class MainListActivity extends AppCompatActivity {
         conrecyclerView.setHasFixedSize(true);
         conlayoutManager = new LinearLayoutManager(this);
         conrecyclerView.setLayoutManager(conlayoutManager);
-        // specify an adapter (see also next example)
+
         //어댑터 설정
         conferenceDataset = new ArrayList<>();
         conAdapter = new ConferenceAdapter(conferenceDataset, MainListActivity.this, user.getUid(), new View.OnClickListener() {
@@ -93,7 +89,6 @@ public class MainListActivity extends AppCompatActivity {
 
 
         // DB에서 회의방 데이터 가져오기
-        // 이 부분에 .child() 추가 해서 경로 바꿀 수 있음
         mConfDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -113,26 +108,5 @@ public class MainListActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
-
-
     }
-
-//    protected void restoreData() {
-//        // 파이어베이스에 데이터 저장
-//
-//        conference = new ConferenceDTO();
-//        Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
-//        conference.setTimestamp(tsLong.toString());
-//        System.out.println("this time is :" + tsLong.toString());
-//        conference.setUserId(user.getUid());
-//        conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
-//        mDatabase.child("conferences").child(conference.getConfId()).setValue(conference);
-//        Log.d("user", conference.getConfId());
-//        Log.d("user", user.getUid());
-//        // 유저 정보에 참여하고 있는 회의 저장 setValue가 아닌 add인지 확인 필요
-//        // DB상에서 리스트로 보일 필요 있음
-//        mDatabase.child("users").child(user.getUid()).child("conference").setValue(conference.getConfId());
-//
-//    }
 }
