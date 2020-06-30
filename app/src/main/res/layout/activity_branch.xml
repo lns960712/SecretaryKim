@@ -12,7 +12,15 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textAlignment="center"
-        android:text=""></TextView>
+        android:text=""/>
+    <TextView
+        android:id="@+id/TextView_contributors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text=""
+        />
 
     <Button
         android:id="@+id/Button_user_list"
@@ -39,12 +47,12 @@
 
     <Button
         android:id="@+id/Button_email"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="문의 하기"
-        android:textStyle="bold"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -36,6 +36,7 @@ public class UserListActivity extends AppCompatActivity {
     private RecyclerView.Adapter userAdapter;
     private RecyclerView.LayoutManager userlayoutManager;
     private List<UserDTO> userDataset;
+    private List<String> joinedUserNickname;
 
 
     @Override
@@ -46,17 +47,18 @@ public class UserListActivity extends AppCompatActivity {
         CheckBox_invite = findViewById(R.id.CheckBox_invite);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mconfDatabase = FirebaseDatabase.getInstance().getReference("conferences");
-        user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
-        Button_invite.setOnClickListener(v ->{
-//            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
-        });
-
         intent = getIntent();
-
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값받아오기
-
+        Button_invite.setOnClickListener(v ->{
+//            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
+            mconfDatabase.child(conference.getConfId()).child("joinedUserNickname").setValue(joinedUserNickname);
+            Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+            intent.putExtra("user", user); // 유저객체넘겨주기
+            intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
+//            intent.putExtra("joinedUserId", joinedUserId.toString());
+            startActivity(intent);
+        });
 
         //userList recyclerView를 위한 어댑터 설정
         userrecyclerView = findViewById(R.id.users_recycler_view);
@@ -64,6 +66,7 @@ public class UserListActivity extends AppCompatActivity {
         userlayoutManager = new LinearLayoutManager(this);
         userrecyclerView.setLayoutManager(userlayoutManager);
 
+        joinedUserNickname = new ArrayList<>();
         userDataset = new ArrayList<>();
         userAdapter = new UserListAdapter(userDataset, UserListActivity.this, user.getUid(), new View.OnClickListener() {
             @Override
@@ -71,11 +74,12 @@ public class UserListActivity extends AppCompatActivity {
                 Object object = v.getTag();
                 if(object!=null){//null체크를 해줘야 좋다.
                     int position = (int) object;
-                    UserDTO users = ((UserListAdapter)userAdapter).getNickname(position);//선언이 RecyclerView.Adapter로 되어 있어서 형변환이 필요함
-                    Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
-                    intent.putExtra("user", user); // 유저객체넘겨주기
-                    intent.putExtra("userList", users);
-                    startActivity(intent);
+                    UserDTO users = ((UserListAdapter)userAdapter).getUserDTO(position);//선언이 RecyclerView.Adapter로 되어 있어서 형변환이 필요함
+                    joinedUserNickname.add(users.getNickname());
+                    for (int i = 0; i< joinedUserNickname.size(); i ++) {
+                        Log.d("User List :", joinedUserNickname.get(i));
+                    }
+//                    CheckBox_invite.setChecked(true);
                 }
             }
         });
@@ -87,28 +91,11 @@ public class UserListActivity extends AppCompatActivity {
         mUsersDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("USERS_LOG : ", dataSnapshot.getKey());
+                Log.d("USERLIST_LOG : ", dataSnapshot.getValue().toString());
                 UserDTO users = dataSnapshot.getValue(UserDTO.class);
                 ((UserListAdapter)userAdapter).addUsers(users);
             }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-        //DB에서 회의 데이터 가져오기
-        mconfDatabase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("USERS_LOG : ", dataSnapshot.getKey());
-                UserDTO users = dataSnapshot.getValue(UserDTO.class);
-                ((UserListAdapter)userAdapter).addUsers(users);
-            }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
             @Override
