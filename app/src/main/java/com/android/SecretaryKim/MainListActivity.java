@@ -100,7 +100,9 @@ public class MainListActivity extends AppCompatActivity {
                 Log.d("CONFERENCE_LOG : ", dataSnapshot.getKey());
                 ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
 //                ConferenceDTO conference = dataSnapshot.child("conferences").getValue(ConferenceDTO.class);
-                ((ConferenceAdapter)conAdapter).addConference(conference);
+                if(conference.getUserId().equals(user.getUid())) {
+                    ((ConferenceAdapter) conAdapter).addConference(conference);
+                }
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }

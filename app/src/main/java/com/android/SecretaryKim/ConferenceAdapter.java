@@ -58,6 +58,7 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         // - replace the contents of the view with that element
         ConferenceDTO conference = conDataset.get(position);
 
+
         holder.TextView_title.setText(conference.getTitle());
         holder.rootView.setTag(position);
         //내가 포함된 회의방표시

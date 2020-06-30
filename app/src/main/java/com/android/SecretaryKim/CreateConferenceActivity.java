@@ -37,6 +37,7 @@ public class CreateConferenceActivity extends AppCompatActivity {
                     Long tsLong = System.currentTimeMillis() / 1000;// 현재 시간을 나타내는 timestamp를 생성
                     conference.setTimestamp(tsLong.toString());
                     System.out.println("this time is :" + tsLong.toString());
+                    conference.addJoinedUserId(user.getUid());
                     conference.setUserId(user.getUid());
                     conference.setConfId(user.getUid() + "_" + conference.getTimestamp());// 회의 ID
                     conference.setTitle(title);
