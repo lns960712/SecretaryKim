@@ -6,14 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".OfflineStartActivity">
 
+    <Button
+        android:id="@+id/sttStartButton"
+        android:layout_width="154dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="223dp"
+        android:layout_marginTop="426dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="260dp"
+        android:text="음성 인식 시작"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/endButton"
+        android:layout_width="154dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="223dp"
+        android:layout_marginTop="478dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="208dp"
+        android:text="회의 종료"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="169dp"
-        android:layout_marginTop="356dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="225dp"
         android:layout_marginEnd="169dp"
-        android:layout_marginBottom="356dp"
+        android:layout_marginBottom="487dp"
         android:text="00:00:00:00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +52,10 @@
         android:id="@+id/timePBar"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="165dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="166dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="319dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +66,33 @@
         app:progress_stroke_width="20dp"
         app:style="solid_line" />
 
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="160dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="426dp"
+        android:layout_marginEnd="221dp"
+        android:layout_marginBottom="208dp"
+        android:text="회의 시작"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="342dp"
+        android:layout_height="169dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="534dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="28dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
