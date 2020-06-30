@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class ChatActivity extends AppCompatActivity {
     private UserDTO user ;
     private ConferenceDTO conference;
     private Intent intent;
+    private CheckBox CheckBox_ishighlight;
     private EditText EditText_chat;
     private Button Button_send;
     private DatabaseReference chatRef;
@@ -44,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Button_send = findViewById(R.id.Button_send);
         EditText_chat = findViewById(R.id.EditText_chat);
+        CheckBox_ishighlight = findViewById(R.id.CheckBox_ishighlight);
 
         //DB연결
         database = FirebaseDatabase.getInstance();
@@ -63,12 +66,17 @@ public class ChatActivity extends AppCompatActivity {
             String message = EditText_chat.getText().toString();
             if(message!=null) {
                 ChatDTO chat = new ChatDTO();
+                if(CheckBox_ishighlight.isChecked()){
+                    chat.setHighlight(true);
+                }else chat.setHighlight(false);
                 chat.setNickname(user.getNickname());
                 chat.setUser(user);
                 chat.setMessage(message);
+
                 chatRef.push().setValue(chat);
 //                myRef.push().setValue(chat);//DB에 값 넣기
                 EditText_chat.setText("");
+                CheckBox_ishighlight.setChecked(false);
             }
         });
 

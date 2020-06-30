@@ -21,6 +21,9 @@
         <activity android:name=".BranchActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".MainListActivity" />
+        <activity android:name=".UserListActivity" />
+
+
     </application>
 
 </manifest>

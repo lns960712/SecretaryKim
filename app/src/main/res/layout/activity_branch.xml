@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".BranchActivity">
+    <TextView
+        android:id="@+id/TextView_isfinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:text=""></TextView>
+
+    <Button
+        android:id="@+id/Button_user_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초대하기" />
     <Button
         android:id="@+id/Button_online"
         android:layout_width="wrap_content"
@@ -17,6 +30,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="offline"></Button>
+
+    <Button
+        android:id="@+id/Button_finish_conference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회의종료"></Button>
 
     <Button
         android:id="@+id/Button_email"
