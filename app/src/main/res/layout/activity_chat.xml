@@ -33,6 +33,7 @@
             android:id="@+id/Button_send"
             android:text="전송"
             android:layout_width="50dp"
+            android:background="@drawable/custom_button"
             android:layout_height="match_parent"/>
     </LinearLayout>
 </LinearLayout>

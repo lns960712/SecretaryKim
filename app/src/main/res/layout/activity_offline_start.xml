@@ -15,6 +15,7 @@
         android:layout_marginEnd="34dp"
         android:layout_marginBottom="260dp"
         android:text="음성 인식 시작"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +30,7 @@
         android:layout_marginEnd="34dp"
         android:layout_marginBottom="208dp"
         android:text="회의 종료"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +45,8 @@
         android:layout_marginEnd="169dp"
         android:layout_marginBottom="487dp"
         android:text="00:00:00:00"
+        android:textStyle="bold"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,10 +79,22 @@
         android:layout_marginEnd="221dp"
         android:layout_marginBottom="208dp"
         android:text="회의 시작"
+        android:textStyle="bold"
+        android:textSize="28dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용법 : 회의시작을 누른 후 음성인식 시작을 누릅니다."
+        android:textColor="#000000"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="602dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

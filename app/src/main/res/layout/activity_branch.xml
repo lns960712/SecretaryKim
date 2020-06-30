@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textAlignment="center"
-        android:text=""/>
+        android:text=""
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/TextView_contributors"
         android:layout_width="match_parent"
@@ -20,39 +22,68 @@
         android:textSize="20sp"
         android:textAlignment="center"
         android:text=""
-        />
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/Button_user_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="초대하기" />
+        android:background="@drawable/custom_button"
+        android:text="초대하기"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="493dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:layout_width="403dp"
+        android:layout_height="262dp"
+        android:background="@drawable/onoff"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="106dp" />
+
     <Button
         android:id="@+id/Button_online"
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:text="online"></Button>
+        android:background="@drawable/custom_button"
+        android:text="online"
+        android:textSize="40dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="205dp"
+        tools:layout_editor_absoluteY="388dp"></Button>
 
     <Button
         android:id="@+id/Button_offline"
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:text="offline"></Button>
+        android:background="@drawable/custom_button"
+        android:text="offline"
+        android:textSize="40dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="388dp"></Button>
 
     <Button
         android:id="@+id/Button_finish_conference"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회의종료"></Button>
+        android:background="@drawable/custom_button"
+        android:text="회의종료"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="555dp"
+        tools:ignore="MissingConstraints"></Button>
 
     <Button
         android:id="@+id/Button_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@drawable/custom_button"
         android:text="문의 하기"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textSize="15dp"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="676dp"
+        tools:ignore="MissingConstraints" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,36 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".CreateConferenceActivity">
 
+
+    <ImageView
+        android:layout_width="269dp"
+        android:layout_height="307dp"
+        android:background="@drawable/secretary_kim"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="50dp" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회의제목 : "
+        android:text="회의제목을 입력하세요."
+        android:textColor="#000000"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="392dp"></TextView>
 
     <EditText
         android:id="@+id/EditText_conference"
-        android:layout_width="0dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.746"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent"></EditText>
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="432dp"></EditText>
 
     <Button
         android:id="@+id/Button_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:background="@drawable/custom_button2"
         android:text="회의생성"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_conference"></Button>
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="627dp"></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
