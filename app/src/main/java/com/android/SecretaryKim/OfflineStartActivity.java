@@ -58,7 +58,6 @@ public class OfflineStartActivity extends AppCompatActivity {
                     Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
 
-        textView = (TextView)findViewById(R.id.textView);
         startButton = (Button) findViewById(R.id.startButton);
         endButton = findViewById(R.id.endButton);
         sttStartButton = findViewById(R.id.sttStartButton);
@@ -91,10 +90,9 @@ public class OfflineStartActivity extends AppCompatActivity {
                 String str = "";
 
                 for(String s : matches) {
-                    str = str + s;
+                    str = str + s + " ";
                 }
 
-                textView.setText(str);
                 mRecognizer.destroy();
                 timeThread.interrupt();
             }

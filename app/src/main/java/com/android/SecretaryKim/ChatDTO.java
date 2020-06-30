@@ -1,5 +1,6 @@
 package com.android.SecretaryKim;
 
+import com.android.SecretaryKim.DTO.UserDTO;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
