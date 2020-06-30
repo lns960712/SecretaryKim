@@ -60,13 +60,15 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         return uDataset==null ? 0: uDataset.size();
     }
 
-    public UserDTO getNickname(int pisition) {
-        return uDataset != null ? uDataset.get(pisition) : null;
+    public UserDTO getUserDTO(int position) {
+        return uDataset != null ? uDataset.get(position) : null;
     }
 
     public void addUsers(UserDTO users){//리사이클러뷰 갱신용 이전에 생성된 회의방을 보이게 함
         uDataset.add(users);
         notifyItemInserted(uDataset.size()-1);
     }
-
+    public UserDTO getUserid(int position) {
+        return uDataset != null ? uDataset.get(position) : null;
+    }
 }

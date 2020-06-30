@@ -6,29 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/navIcon"
-        android:layout_width="42dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="367dp"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar2"-->
+<!--        android:layout_width="409dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/colorPrimary"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <Button
         android:id="@+id/makeConference"
@@ -43,24 +30,14 @@
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/enterConference"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="36dp"
-        android:text="회의참가하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="540dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         tools:srcCompat="@tools:sample/avatars" />
@@ -72,19 +49,22 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="139dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="92dp"
         android:text="진행중인 회의 목록"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="205dp"
         android:layout_height="431dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toTopOf="@+id/makeConference"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/TitleView"
         app:layout_constraintVertical_bias="0.615">
