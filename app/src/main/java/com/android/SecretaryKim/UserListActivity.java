@@ -36,7 +36,7 @@ public class UserListActivity extends AppCompatActivity {
     private RecyclerView.Adapter userAdapter;
     private RecyclerView.LayoutManager userlayoutManager;
     private List<UserDTO> userDataset;
-    private List<String> joinedUserId;
+    private List<String> joinedUserNickname;
 
 
     @Override
@@ -52,8 +52,11 @@ public class UserListActivity extends AppCompatActivity {
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값받아오기
         Button_invite.setOnClickListener(v ->{
 //            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue();
-            mconfDatabase.child(conference.getConfId()).child("joinedUserId").setValue(joinedUserId);
+            mconfDatabase.child(conference.getConfId()).child("joinedUserNickname").setValue(joinedUserNickname);
             Intent intent = new Intent(getApplicationContext(), BranchActivity.class);
+            intent.putExtra("user", user); // 유저객체넘겨주기
+            intent.putExtra("conference", conference);//컨퍼런스객체넘겨주기
+//            intent.putExtra("joinedUserId", joinedUserId.toString());
             startActivity(intent);
         });
 
@@ -63,7 +66,7 @@ public class UserListActivity extends AppCompatActivity {
         userlayoutManager = new LinearLayoutManager(this);
         userrecyclerView.setLayoutManager(userlayoutManager);
 
-        joinedUserId = new ArrayList<>();
+        joinedUserNickname = new ArrayList<>();
         userDataset = new ArrayList<>();
         userAdapter = new UserListAdapter(userDataset, UserListActivity.this, user.getUid(), new View.OnClickListener() {
             @Override
@@ -72,9 +75,9 @@ public class UserListActivity extends AppCompatActivity {
                 if(object!=null){//null체크를 해줘야 좋다.
                     int position = (int) object;
                     UserDTO users = ((UserListAdapter)userAdapter).getUserDTO(position);//선언이 RecyclerView.Adapter로 되어 있어서 형변환이 필요함
-                    joinedUserId.add(users.getUid());
-                    for (int i = 0; i<joinedUserId.size(); i ++) {
-                        Log.d("User List :",joinedUserId.get(i));
+                    joinedUserNickname.add(users.getNickname());
+                    for (int i = 0; i< joinedUserNickname.size(); i ++) {
+                        Log.d("User List :", joinedUserNickname.get(i));
                     }
 //                    CheckBox_invite.setChecked(true);
                 }

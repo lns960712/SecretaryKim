@@ -8,11 +8,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.SecretaryKim.DTO.UserDTO;
+import com.firebase.ui.auth.data.model.User;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /*
     회의에 관한 정보를 보여주는 액티비티
@@ -36,10 +46,15 @@ public class BranchActivity extends AppCompatActivity {
     private Button Button_email;
     private Button Button_finish_conference;
     private TextView TextView_isfinish;
+    private TextView TextView_contributors;
     private UserDTO user;
     private ConferenceDTO conference;
     private Intent intent;
     private DatabaseReference myRef;
+    private DatabaseReference yourRef;
+    private List<String> blah;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +65,58 @@ public class BranchActivity extends AppCompatActivity {
         Button_email = findViewById(R.id.Button_email);
         Button_finish_conference = findViewById(R.id.Button_finish_conference);
         TextView_isfinish = findViewById(R.id.TextView_isfinish);
+        TextView_contributors = findViewById(R.id.TextView_contributors);
         intent = getIntent();
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값 넘겨받기
         user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
+//        myRef = FirebaseDatabase.getInstance().getReference("conferences/"+conference.getConfId()).child("joinedUserId");
+        myRef = FirebaseDatabase.getInstance().getReference("conferences").child(conference.getConfId()).child("joinedUserNickname");
+        Log.d("UserLog:", "conferences/"+ conference.getConfId());
+        yourRef = FirebaseDatabase.getInstance().getReference("users");
+        blah = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+
         //회의 진행여부표시
         if(conference.isFinish()){
             TextView_isfinish.setText("종료된 회의");
         }else{
             TextView_isfinish.setText("진행중인 회의");
         }
+
+        //회의 참가자 표시
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                System.out.println(dataSnapshot);
+                blah = Collections.singletonList(dataSnapshot.getValue().toString());
+                sb.append(blah);
+                System.out.println("여기야"+blah);
+                Log.d("진짜", String.valueOf(sb));
+                TextView_contributors.setText("참여자 : "+String.valueOf(sb));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         //사용자 초대 리스트로
         Button_user_list.setOnClickListener(v -> {
             Log.d("user", "UserList로 넘어감");
@@ -86,9 +144,9 @@ public class BranchActivity extends AppCompatActivity {
         });
         //회의종료시키기
         Button_finish_conference.setOnClickListener(v -> {
-            myRef = FirebaseDatabase.getInstance().getReference();
+
             conference.setFinish(true);
-            myRef.child("conferences").child(conference.getConfId()).setValue(conference);
+            myRef.setValue(conference);
             Toast.makeText(getApplicationContext(), "회의가 종료되었습니다.", Toast.LENGTH_SHORT).show();
 
         });
