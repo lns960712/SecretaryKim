@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +39,6 @@ public class MainListActivity extends AppCompatActivity {
     private Intent intent;
     private UserDTO user;
     private Button makeButton;
-    private Button enterButton;
     private ImageView imageView;
     private DatabaseReference mDatabase;
     private RecyclerView conrecyclerView;
@@ -70,31 +67,7 @@ public class MainListActivity extends AppCompatActivity {
 //            restoreData();
             startActivity(intent);
         });
-        enterButton.setOnClickListener(v -> { // email로 confID 받아서 참가해야함
-            void show()
-            {
-                final EditText edittext = new EditText(this);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("AlertDialog Title");
-                builder.setMessage("AlertDialog Content");
-                builder.setView(edittext);
-                builder.setPositiveButton("입력",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
-                            }
-                        });
-                builder.setNegativeButton("취소",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                builder.show();
-            };
-
-        });
         //recyclerView
         conrecyclerView = findViewById(R.id.conference_recycler_view);
         conrecyclerView.setHasFixedSize(true);
