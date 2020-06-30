@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users_recycler_view"
         android:layout_width="408dp"
-        android:layout_height="643dp"
+        android:layout_height="300dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +23,15 @@
 
     <Button
         android:id="@+id/Button_invite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="248dp"
+        android:background="@drawable/custom_button2"
         android:text="초대하기"
-        android:background="@drawable/custom_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/users_recycler_view"></Button>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

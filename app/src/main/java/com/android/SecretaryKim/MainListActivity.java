@@ -54,7 +54,7 @@ public class MainListActivity extends AppCompatActivity {
 
         makeButton = findViewById(R.id.makeConference);
         imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.usericon);
+//        imageView.setImageResource(R.drawable.usericon);
         intent = getIntent();
         user = (UserDTO) intent.getSerializableExtra("user");//intent값 넘겨받기
         makeButton.setOnClickListener(v -> {

@@ -7,13 +7,18 @@
     tools:context=".CreateConferenceActivity">
 
 
+
+
     <ImageView
         android:layout_width="269dp"
         android:layout_height="307dp"
         android:background="@drawable/secretary_kim"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="50dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
 
     <TextView
         android:id="@+id/textView2"
@@ -23,28 +28,40 @@
         android:textColor="#000000"
         android:textSize="30dp"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="392dp"></TextView>
+        app:layout_constraintBottom_toTopOf="@+id/EditText_conference"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <EditText
         android:id="@+id/EditText_conference"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
         android:textSize="30dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="432dp"></EditText>
+        app:layout_constraintBottom_toTopOf="@+id/Button_create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"></EditText>
 
     <Button
         android:id="@+id/Button_create"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/custom_button2"
         android:text="회의생성"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="627dp"></Button>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.477"
+        app:layout_constraintStart_toStartOf="parent"></Button>
+
+    <include layout="@layout/activity_main"/>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

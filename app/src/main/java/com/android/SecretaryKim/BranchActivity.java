@@ -77,27 +77,15 @@ public class BranchActivity extends AppCompatActivity {
         }else{
             TextView_isfinish.setText("진행중인 회의");
         }
+        //회의종료시키기
+        Button_finish_conference.setOnClickListener(v -> {
 
-        //회의 참가자 표시
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                System.out.println(dataSnapshot);
-                blah = Collections.singletonList(dataSnapshot.getValue().toString());
-                sb.append(blah);
-                Log.d("진짜", String.valueOf(sb));
-                TextView_contributors.setText("참여자 : "+String.valueOf(sb));
-            }
+            conference.setFinish(true);
+            myRef.setValue(conference);
+            Toast.makeText(getApplicationContext(), "회의가 종료되었습니다.", Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+
 
         //사용자 초대 리스트로
         Button_user_list.setOnClickListener(v -> {
@@ -124,14 +112,7 @@ public class BranchActivity extends AppCompatActivity {
             intent.putExtra("user", user); // 유저객체넘겨주기
             startActivity(intent);
         });
-        //회의종료시키기
-        Button_finish_conference.setOnClickListener(v -> {
 
-            conference.setFinish(true);
-            myRef.setValue(conference);
-            Toast.makeText(getApplicationContext(), "회의가 종료되었습니다.", Toast.LENGTH_SHORT).show();
-
-        });
         Button_email.setOnClickListener(new TextView.OnClickListener() {
             public void onClick(View view) {
                 Intent email = new Intent(Intent.ACTION_SEND);
@@ -142,6 +123,26 @@ public class BranchActivity extends AppCompatActivity {
                 email.putExtra(Intent.EXTRA_TEXT, "내용 미리보기 (미리적을 수 있음)");
                 startActivity(email);
             }
+        });
+        //회의 참가자 표시
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                System.out.println(dataSnapshot);
+                blah = Collections.singletonList(dataSnapshot.getValue().toString());
+                sb.append(blah);
+                Log.d("진짜", String.valueOf(sb));
+                TextView_contributors.setText("참여자 : "+String.valueOf(sb));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
     }
