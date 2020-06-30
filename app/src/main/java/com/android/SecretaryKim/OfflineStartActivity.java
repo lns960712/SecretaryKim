@@ -90,11 +90,18 @@ public class OfflineStartActivity extends AppCompatActivity {
                 String str = "";
 
                 for(String s : matches) {
-                    str = str + s + " ";
+                    str += s + " ";
                 }
 
+                Toast.makeText(getApplicationContext(), str,Toast.LENGTH_LONG).show();
                 mRecognizer.destroy();
                 timeThread.interrupt();
+
+                Intent in = new Intent(getApplicationContext(), ResultActivity.class);
+
+                in.putExtra("list", str);
+
+                startActivity(in);
             }
 
         });
@@ -174,14 +181,11 @@ public class OfflineStartActivity extends AppCompatActivity {
                     message = "알 수 없는 오류임";
                     break;
             }
-
-            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onResults(Bundle results) {
             // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줍니다.
-            Toast.makeText(getApplicationContext(), results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0),Toast.LENGTH_LONG).show();
             for(String s : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)) {
                 matches.add(s);
             }
