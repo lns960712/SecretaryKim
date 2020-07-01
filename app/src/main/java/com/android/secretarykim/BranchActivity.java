@@ -50,6 +50,7 @@ public class BranchActivity extends AppCompatActivity {
     private ConferenceDTO conference;
     private Intent intent;
     private DatabaseReference myRef;
+    private DatabaseReference contributorRef;
     private List<String> blah;
 
     @Override
@@ -66,7 +67,8 @@ public class BranchActivity extends AppCompatActivity {
         intent = getIntent();
         conference = (ConferenceDTO) intent.getSerializableExtra("conference");//intent값 넘겨받기
         user = (UserDTO) intent.getSerializableExtra("user");//intent값받아오기
-        myRef = FirebaseDatabase.getInstance().getReference("conferences").child(conference.getConfId()).child("joinedUserNickname");
+        myRef = FirebaseDatabase.getInstance().getReference("conferences");
+        contributorRef = FirebaseDatabase.getInstance().getReference("conferences").child(conference.getConfId()).child("joinedUserNickname");
         Log.d("UserLog:", "conferences/"+ conference.getConfId());
         blah = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -81,7 +83,7 @@ public class BranchActivity extends AppCompatActivity {
         Button_finish_conference.setOnClickListener(v -> {
 
             conference.setFinish(true);
-            myRef.setValue(conference);
+            myRef.child(conference.getConfId()).setValue(conference);
             Toast.makeText(getApplicationContext(), "회의가 종료되었습니다.", Toast.LENGTH_SHORT).show();
 
         });
@@ -125,7 +127,7 @@ public class BranchActivity extends AppCompatActivity {
             }
         });
         //회의 참가자 표시
-        myRef.addChildEventListener(new ChildEventListener() {
+        contributorRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 System.out.println(dataSnapshot);

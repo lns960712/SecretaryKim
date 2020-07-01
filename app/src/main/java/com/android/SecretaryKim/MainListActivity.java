@@ -100,7 +100,12 @@ public class MainListActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                ConferenceDTO conference = dataSnapshot.getValue(ConferenceDTO.class);
+                if(conference.getUserId().equals(user.getUid())) {
+                    ((ConferenceAdapter) conAdapter).changeConference(conference);
+                }
+            }
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
             @Override

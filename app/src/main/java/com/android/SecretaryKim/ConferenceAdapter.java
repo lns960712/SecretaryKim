@@ -77,4 +77,12 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.My
         conDataset.add(conference);
         notifyItemInserted(conDataset.size()-1);
     }
+    public void changeConference(ConferenceDTO conference){//리사이클러뷰 갱신용 이전에 생성된 회의방을 보이게 함
+        for(int i = 0; i<conDataset.size(); i++){
+            if(conDataset.get(i).equals(conference)){
+                conDataset.set(i,conference);
+            }
+        }
+        notifyItemInserted(conDataset.size()-1);
+    }
 }

@@ -127,9 +127,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <include
-        layout="@layout/activity_main"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 

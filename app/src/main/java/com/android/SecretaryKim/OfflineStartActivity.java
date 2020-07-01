@@ -10,7 +10,6 @@ import android.os.Message;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OfflineStartActivity extends AppCompatActivity {
@@ -91,7 +89,6 @@ public class OfflineStartActivity extends AppCompatActivity {
                     str += s + " ";
                 }
 
-                Toast.makeText(getApplicationContext(), str,Toast.LENGTH_LONG).show();
                 mRecognizer.destroy();
                 timeThread.interrupt();
 
